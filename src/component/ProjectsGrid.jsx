@@ -3,22 +3,25 @@ import PropTypes, { instanceOf } from 'prop-types';
 import ProjectView from "./ProjectView.jsx";
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Projects = () => {
+const Projects = ({TimeExpiered}) => {
     const [githubProjects, setGithubProjects] = useState(null);
     const [lastseen, setlastseen] = useState(null);
 
     useEffect(()=>{
         const storedTime = localStorage.getItem('githubProjectsTime');
         var timegone = Math.floor((Date.now() - parseInt(storedTime)) / 1000 / 60 / 60)
+    
         if(storedTime)
         setlastseen(timegone == 0? "A few minutes ago": timegone)
     },[githubProjects])
+    
     useEffect(() => {
+        console.log("timeex",TimeExpiered)
         const storedData = localStorage.getItem('githubProjects');
         if (storedData) {
             setGithubProjects(JSON.parse(storedData));
         } 
-    }, []);
+    }, [TimeExpiered]);
 
     return (
         <>
