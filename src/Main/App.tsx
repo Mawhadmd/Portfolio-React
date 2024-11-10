@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "../Styles/App.scss";
+import React from 'react'
+
 import NavBar from "../component/NavBar";
 import Footer from "../component/Footer";
 import Hero from "../component/Hero";
@@ -7,7 +9,7 @@ import ProjectsGrid from "../component/ProjectsGrid";
 
 
 function App() {
-  const [TimeExpiered, SetExpired] = useState(true)
+  const [TimeExpiered, SetExpired] = useState<boolean>(true)
   const EXPIRY_TIME = 12 * 60 * 60 * 1000; 
 
 useEffect(()=>{

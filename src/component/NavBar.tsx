@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 
 const NavBar = () => {
-    const storedData = JSON.parse(localStorage.getItem('githubProjects')) ?? null
+    const storedData: any = JSON.parse(localStorage.getItem('githubProjects') ?? 'null');
 
     let url 
     let avatar

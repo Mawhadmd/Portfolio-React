@@ -3,13 +3,18 @@ import PropTypes, { instanceOf } from 'prop-types';
 import ProjectView from "./ProjectView.jsx";
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Projects = ({TimeExpiered}) => {
-    const [githubProjects, setGithubProjects] = useState(null);
-    const [lastseen, setlastseen] = useState(null);
+const Projects = ({ TimeExpiered }: { TimeExpiered: boolean }) => {
+    const [githubProjects, setGithubProjects] = useState<any>(null);
+    const [lastseen, setlastseen] = useState<any>(null);
 
     useEffect(()=>{
-        const storedTime = localStorage.getItem('githubProjectsTime');
-        var timegone = Math.floor((Date.now() - parseInt(storedTime)) / 1000 / 60 / 60)
+        const storedTime: string | null = localStorage.getItem('githubProjectsTime');
+        var timegone: number;
+        if (storedTime !== null) {
+             timegone = Math.floor((Date.now() - parseInt(storedTime)) / 1000 / 60 / 60);
+          } else {
+             timegone = 0; 
+          }
     
         if(storedTime)
         setlastseen(timegone == 0? "A few minutes ago": timegone)
@@ -29,7 +34,7 @@ const Projects = ({TimeExpiered}) => {
         <section className='ProjectGrid'>
          
             {githubProjects && githubProjects.items
-                ? githubProjects.items.map((project) => (
+                ? githubProjects.items.map((project: any) => (
                     <motion.div 
                     key={project.id}
   whileInView={{ x: [-150,0], opacity: [0,1]}}

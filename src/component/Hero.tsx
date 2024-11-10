@@ -32,19 +32,19 @@ const array3 = AString3.split(' ');
 const array0 = AString0.split(' ');
 const animationseconds = 0.01
 const Hero = () => {
-  const [currentIndex, setCurrentIndex] = useState(Math.floor(Math.random()*15+1));
-  const [showA2, setShowA2] = useState(false);
-  const [showA3, setShowA3] = useState(false);
-  const [abtme, setabtme] = useState(false)
-  const [h1height, seth1height] = useState({height: 'auto'});
-  const slideref = useRef()
+  const [currentIndex, setCurrentIndex] = useState(Math.floor(Math.random()*14+1));
+  const [showA2, setShowA2] = useState<boolean>(false);
+  const [showA3, setShowA3] = useState<boolean>(false);
+  const [abtme, setabtme] = useState<boolean>(false)
+  const [h1height, seth1height] = useState<{ height: string | number }>({ height: 'auto' });
+  const slideref = useRef<HTMLDivElement | null>(null);
   const handleAnimationComplete = () => {
-  if(slideref.current){
-    const newHeight = slideref.current.offsetHeight;
+   if (slideref.current) {
+    const newHeight: number = slideref.current.offsetHeight;
     if (h1height.height !== newHeight) {
       seth1height({ height: newHeight });
     }
-  }  
+  }
   }
 
   useEffect(() => {
@@ -73,8 +73,8 @@ const Hero = () => {
   }
   }, [abtme]);
 
-  const generateSpans = (arr) => {
-    return arr.map((word, i) => (
+  const generateSpans = (arr: string[]) => {
+    return arr.map((word: string, i: number) => (
       <span key={`${word}-${i}`} style={{ overflow: 'hidden' }}>
         <motion.span 
           style={{ display: 'flex', width: 'fit-content', height: 'fit-content'}}

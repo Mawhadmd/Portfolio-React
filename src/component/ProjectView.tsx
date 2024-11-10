@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const ProjectView = ({project}) => {
+const ProjectView: React.FC<{project: any}> = ({ project }) => {
     return (
         
             <div className='ProjectView'>
