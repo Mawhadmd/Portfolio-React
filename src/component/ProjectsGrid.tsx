@@ -1,53 +1,65 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes, { instanceOf } from 'prop-types';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import ProjectView from "./ProjectView.jsx";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from "framer-motion";
 
-const Projects = ({ TimeExpiered }: { TimeExpiered: boolean }) => {
-    const [githubProjects, setGithubProjects] = useState<any>(null);
-    const [lastseen, setlastseen] = useState<any>(null);
+const Projects = ({ TimeHasExpired }: { TimeHasExpired: boolean }) => {
+  const [githubProjects, setGithubProjects] = useState<any>(null);
+  const [lastSeen, setLastSeen] = useState<any>(null);
 
-    useEffect(()=>{
-        const storedTime: string | null = localStorage.getItem('githubProjectsTime');
-        var timegone: number;
-        if (storedTime !== null) {
-             timegone = Math.floor((Date.now() - parseInt(storedTime)) / 1000 / 60 / 60);
-          } else {
-             timegone = 0; 
-          }
+  useEffect(() => {
+    const storedTimeString = localStorage.getItem("githubProjectsTime"); 
+    let hoursSinceLastUpdate;
+
+    if (storedTimeString !== null) {
+      hoursSinceLastUpdate = Math.floor(
+        (Date.now() - parseInt(storedTimeString)) / 1000 / 60 / 60
+      );
+    } else {
+      hoursSinceLastUpdate = 0;
+    }
+
+    if (storedTimeString) setLastSeen(hoursSinceLastUpdate === 0 ? "A few minutes ago" : hoursSinceLastUpdate);
+  }, [githubProjects]);
+
+  useEffect(() => {
+    console.log("Time expired:", TimeHasExpired);
+    const storedProjects = localStorage.getItem("githubProjects");
     
-        if(storedTime)
-        setlastseen(timegone == 0? "A few minutes ago": timegone)
-    },[githubProjects])
-    
-    useEffect(() => {
-        console.log("timeex",TimeExpiered)
-        const storedData = localStorage.getItem('githubProjects');
-        if (storedData) {
-            setGithubProjects(JSON.parse(storedData));
-        } 
-    }, [TimeExpiered]);
+    if (storedProjects) {
+      setGithubProjects(JSON.parse(storedProjects));
+    }
+  }, [TimeHasExpired]);
 
-    return (
-        <>
-           <div style={{textAlign: 'center', padding: '10px'}}>Last update: {lastseen} {lastseen != null && String(lastseen).match(/^[0-9]+$/)? lastseen <= 1 == null? 'hour': 'hours': ""} </div>
-        <section className='ProjectGrid'>
-         
-            {githubProjects && githubProjects.items
-                ? githubProjects.items.map((project: any) => (
-                    <motion.div 
-                    key={project.id}
-  whileInView={{ x: [-150,0], opacity: [0,1]}}
-  transition={{ duration: 0.5, delay: 0.3 }}
-  viewport={{ once: true }}
->
-                        <ProjectView key={project.id} project={project} />
-                    </motion.div>
-                  ))
-                : <p>Loading...</p>}
-        </section>
-        </>
-    );
+  return (
+    <>
+      <div style={{ textAlign: "center", padding: "10px" }}>
+        <h1>Github Projects Live</h1>
+        Last update: {lastSeen}{" "}
+        {lastSeen != null && String(lastSeen).match(/^[0-9]+$/)
+          ? lastSeen <= 1 == null
+            ? "hour"
+            : "hours"
+          : ""}{" "}
+      </div>
+      <section className="ProjectGrid">
+        {githubProjects && githubProjects.items ? (
+          githubProjects.items.map((project: typeof githubProjects[0]) => (
+            <motion.div
+              key={project.id}
+              whileInView={{ y: [100, 0], opacity: [0, 1] }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              {project.name!= "Mawhadmd" && <ProjectView key={project.id} project={project} />}
+            </motion.div>
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
+      </section>
+    </>
+  );
 };
 
 Projects.propTypes = {};

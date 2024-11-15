@@ -9,17 +9,15 @@ import ProjectsGrid from "../component/ProjectsGrid";
 
 
 function App() {
-  const [TimeExpiered, SetExpired] = useState<boolean>(true)
+  const [TimeHasExpired, SetExpired] = useState<boolean>(true)
   const EXPIRY_TIME = 12 * 60 * 60 * 1000; 
 
-useEffect(()=>{
+useEffect(()=>{ //gets data form github if 6 hours passed since last update
   const storedTime = localStorage.getItem('githubProjectsTime');
   let fetchon =storedTime? Date.now() - parseInt(storedTime) > EXPIRY_TIME: true
   if(storedTime)
     SetExpired(fetchon)
-  console.log('expired?', TimeExpiered)
-  console.log('timefetch?', fetchon)
-  console.log('time?', storedTime)
+
   if(fetchon) {
     console.log('fetching data')
     fetch('https://api.github.com/search/repositories?q=user:mawhadmd')
@@ -43,7 +41,7 @@ useEffect(()=>{
     <>
       <NavBar />
       <Hero />
-      <ProjectsGrid TimeExpiered />
+      <ProjectsGrid TimeHasExpired = {TimeHasExpired} />
       <Footer />
     </>
   );
