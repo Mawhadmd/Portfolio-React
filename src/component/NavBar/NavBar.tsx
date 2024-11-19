@@ -31,7 +31,7 @@ const NavBar = () => {
         </a>
         <p>Mo. Awad</p>
       </motion.div>
-      <NavBarList left={false}/>
+      <NavBarList left={false} />
     </nav>
   );
 };
