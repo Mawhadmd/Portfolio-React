@@ -32,12 +32,12 @@ const Projects = ({ TimeHasExpired }: { TimeHasExpired: boolean }) => {
   }, [TimeHasExpired]);
 
   return (
-    <>
+    <div className="Gitprojectcontainer">
       <div style={{ textAlign: "center", padding: "10px" }}>
         <h1>Github Projects Live</h1>
         Last update: {lastSeen}{" "}
         {lastSeen != null && String(lastSeen).match(/^[0-9]+$/)
-          ? lastSeen <= 1 == null
+          ? lastSeen <= 1
             ? "hour"
             : "hours"
           : ""}{" "}
@@ -58,7 +58,7 @@ const Projects = ({ TimeHasExpired }: { TimeHasExpired: boolean }) => {
           <p>Loading...</p>
         )}
       </section>
-    </>
+    </div>
   );
 };
 
