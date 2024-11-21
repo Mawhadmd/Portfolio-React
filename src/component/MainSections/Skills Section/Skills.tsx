@@ -59,19 +59,21 @@ const ComponentName = () => {
   const [animate, setanimate] = useState<boolean>(false);
   const { skillsref, techstackref }: any = useContext(refsprovider);
   return (
-    <>
+    <div className="projectgridcontainer">
+    <h2>Skills</h2>
       <motion.section
-      ref={skillsref}
+        ref={skillsref}
+        id="skills"
         onViewportEnter={() => {
           setanimate(true);
         }}
-        viewport={{ amount: 0.5 }}
+        viewport={{ amount: 0.3 }}
         className="Skills"
       >
         {Data.map((item: SkillData, index: number) => {
           return (
             <motion.div
-            ref={techstackref}
+              ref={techstackref}
               key={index}
               viewport={{ once: true }}
               transition={{
@@ -100,6 +102,7 @@ const ComponentName = () => {
               layout
               className="SkillBlock"
             >
+
               <img src={item.Icon} alt="Webdev" />
               <h1>{item.Skill}</h1>
               <p>{item.Description}</p>
@@ -111,7 +114,7 @@ const ComponentName = () => {
         <Slidingskills assetsArray={assetsArray} />
         <Slidingskills assetsArray={assetsArray} />
       </div>
-    </>
+    </div>
   );
 };
 

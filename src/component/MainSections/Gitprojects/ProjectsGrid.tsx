@@ -50,7 +50,7 @@ const Projects = ({ TimeHasExpired }: { TimeHasExpired: boolean }) => {
   return (
     <div  className="Gitprojectcontainer" ref={githubref}>
       <div style={{ textAlign: "center", padding: "10px" }}>
-        <h1>Github Projects Live</h1>
+        <h1>Projects</h1>
         Last update: {lastSeen}{" "}
         {lastSeen != null && String(lastSeen).match(/^[0-9]+$/)
           ? lastSeen <= 1
@@ -58,7 +58,7 @@ const Projects = ({ TimeHasExpired }: { TimeHasExpired: boolean }) => {
             : "hours"
           : ""}{" "}
       </div>
-      <section style={{height: rmore<0? `${((Math.round(githubProjects?.items?.length) / 3) * 120)}px` : `${((Math.round(githubProjects?.items?.length) / 3) * 120) + 180}px`  }}  className="ProjectGrid">
+      <section className="ProjectGrid">
         {githubProjects && githubProjects.items ? (
           githubProjects.items.map(
             (project: (typeof githubProjects)[0], index: number) => (

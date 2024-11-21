@@ -14,11 +14,20 @@ interface NavBarListProps {
 }
 
 const NavBarList = ({ left }: NavBarListProps) => {
+    const [navinview,setnavinview] = useState<any>()
     const [ulstyles, setulstyles] = useState<any>({});
     const { techstackref, aboutref, skillsref, expref, githubref }: any = useContext(refsprovider);
-
+    const [aboutinview, setabtinview] = useState<boolean>()
     useEffect(() => {
         const handleScroll = () => {
+            setabtinview(false)
+           
+            let y = aboutref.current.getBoundingClientRect().y;
+            if(y>-1190  && y <225 && document.documentElement.clientWidth<700){
+               setabtinview(true)
+            }
+            if(document.documentElement.scrollTop > 80)
+                setnavinview({})
             let top = document.documentElement.scrollTop;
             if (top > 50) {
                 setulstyles({ top: `${top + 100}px` });
@@ -34,12 +43,16 @@ const NavBarList = ({ left }: NavBarListProps) => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
 
+       
+    }, []);
+    function isinview(){
+        setnavinview({ y: [-70, 0], opacity: [0, 1] })
+    }
     return (
         <>
             {left && (
-                <div className='leftulcontainer' style={{...ulstyles}}>  
+                <div className='leftulcontainer' style={{...ulstyles, opacity: aboutinview? 0.20: 1}}>  
                 <motion.ul className='Navlist left' style={{position:"static"}} >
                     <li onClick={() => {aboutref.current.scrollIntoView()}}><img src={Aboutme} alt="AboutMe" /> AboutMe</li>
                     <li onClick={() => {skillsref.current.scrollIntoView()}}><img src={Skills} alt="Skills" /> Skills</li>
@@ -55,12 +68,12 @@ const NavBarList = ({ left }: NavBarListProps) => {
 
             {!left && (
                 <motion.ul
-                    whileInView={{ y: [-70, 0], opacity: [0, 1] }}
-                    viewport={{ once: false }}
-                    transition={{ duration: 0.4, delay: 0.4 }}
+                animate={navinview}
+                viewport={{ once: false }}
+                transition={{ duration: 0.4, delay: 0.4 }}
                     className='Navlist'
                 >
-                    <li onClick={() => {techstackref.current.scrollIntoView()}}>TechStack</li>
+                    <motion.li onViewportEnter={()=>{isinview()}} onClick={() => {techstackref.current.scrollIntoView()}}>TechStack</motion.li>
                     <li onClick={() => {aboutref.current.scrollIntoView()}}>AboutMe</li>
                     <li onClick={() => {skillsref.current.scrollIntoView()}}>Skills</li>
                     <li onClick={() => {}}>Resume</li>

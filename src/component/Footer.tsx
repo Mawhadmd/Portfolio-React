@@ -9,6 +9,7 @@ import { refsprovider } from '../Main/main';
 const Footer = () => {
     return (
         <footer>
+                <span><a href="#skills">Open Resume</a></span>
             <div>
                 <ul>
                     <li><a target='_blank' href="https://www.linkedin.com/in/mhmdawad/"><img src={linkedin} alt="Linkedin profile"/></a></li>
