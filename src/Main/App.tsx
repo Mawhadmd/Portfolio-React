@@ -4,11 +4,11 @@ import React from "react";
 
 import NavBar from "../component/NavBar/NavBar";
 import Footer from "../component/Footer";
-import Hero from "../component/Hero";
-import ProjectsGrid from "../component/ProjectsGrid";
-import AboutMe from "../component/AboutMe";
-import Skills from "../component/Skills";
-import Experience from "../component/Experience";
+import Hero from "../component/MainSections/Hero";
+import ProjectsGrid from "../component/MainSections/Gitprojects/ProjectsGrid";
+import AboutMe from "../component/MainSections/AboutMe";
+import Skills from "../component/MainSections/Skills Section/Skills";
+import Experience from "../component/MainSections/Experience";
 import NavBarList from "../component/NavBar/NavBarList";
 
 function App() {
@@ -79,8 +79,10 @@ function App() {
       <AboutMe />
       <Skills />
       <Experience />
+
       <ProjectsGrid TimeHasExpired={TimeHasExpired} />
       <Footer />
+
     </>
   );
 }

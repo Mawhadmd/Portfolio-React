@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import linkedin from "../assets/linkedin.png";
-import github from "../assets/github.png";
-import twitter from "../assets/twitter.png";
-import upwork from "../assets/upwork.png";
+import linkedin from "../../assets/linkedin.png";
+import github from "../../assets/github.png";
+import twitter from "../../assets/twitter.png";
+import upwork from "../../assets/upwork.png";
+import { refsprovider } from "../../Main/main";
 
 var ArrayofspanStrings = [
   "<span>Backend</span></br> Developer",
@@ -23,7 +24,7 @@ var ArrayofspanStrings = [
 ];
 
 const Hero = () => {
-  function htmltojsx() {}
+  const {heroref}:any = useContext(refsprovider)
   const [currentIndex, setCurrentIndex] = useState(
     Math.floor(Math.random() * ArrayofspanStrings.length + 1)
   );
@@ -64,7 +65,7 @@ const Hero = () => {
 
 
   return (
-    <main className="Hero">
+    <main className="Hero" ref={heroref}>
       <motion.div>
         <motion.div whileInView={{y:[200,0], opacity:[0,1]}} viewport={{once: true}} transition={{duration: 0.5, delay:0}}>
         <h1  className="Slideingtext" style={{ ...h1heightandwidth }}>

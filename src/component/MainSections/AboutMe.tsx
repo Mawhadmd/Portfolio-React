@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { refsprovider } from "../../Main/main";
 const AboutMe = () => {
+  const {aboutref}:any = useContext(refsprovider)
   const [showA2, setShowA2] = useState<boolean>(false);
   const [showA3, setShowA3] = useState<boolean>(false);
   const [showA4, setShowA4] = useState<boolean>(false);
@@ -65,8 +67,8 @@ const AboutMe = () => {
   };
 
   return (
-    <div className="AboutMe">
-      <motion.h2 whileInView={{ y:[-100,0],opacity:[0,1], letterSpacing: ['50px','0px']}} viewport={{once: true}} transition={{duration: 0.4}} >AboutMe</motion.h2>
+    <div className="AboutMe" ref={aboutref}>
+      <motion.h2 whileInView={{ y:[-20,0],opacity:[0,1], letterSpacing: ['10px','0px']}} viewport={{once: true}} transition={{duration: 0.4}} >AboutMe</motion.h2>
       <motion.div 
       onViewportEnter={()=>{setabtme(true);}}
       viewport={{once: true, amount: 'some'}}
