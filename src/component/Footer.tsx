@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import linkedin from "../assets/linkedin.png"
 import github from "../assets/github.png"
 import twitter from "../assets/twitter.png"
 import upwork from "../assets/upwork.png"
+import { refsprovider } from '../Main/main';
 
 const Footer = () => {
     return (
         <footer>
+                <span><a href="#skills">Open Resume</a></span>
             <div>
                 <ul>
                     <li><a target='_blank' href="https://www.linkedin.com/in/mhmdawad/"><img src={linkedin} alt="Linkedin profile"/></a></li>
