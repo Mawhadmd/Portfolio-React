@@ -1,21 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ProjectView from "./ProjectView.js";
-import { motion } from "framer-motion";
 import { refsprovider } from "../../../Main/main.js";
-
+interface items {
+  Firstgrid: Array<React.JSX.Element>;
+  Secondsgrid: Array<React.JSX.Element>;
+  Thirdgrid: Array<React.JSX.Element>;
+}
 const Projects = ({ TimeHasExpired }: { TimeHasExpired: boolean }) => {
   const [githubProjects, setGithubProjects] = useState<any>(null);
+
   const [lastSeen, setLastSeen] = useState<any>(null);
   const [displayed, setdisplayed] = useState<boolean>(false);
+  const [loading, setloading] = useState<boolean>(true);
   const [rmore, setrmore] = useState<number>(-1);
+  const [items, setitems] = useState<items>({
+    Firstgrid: [],
+    Secondsgrid: [],
+    Thirdgrid: [],
+  });
+
   const { githubref }: any = useContext(refsprovider);
+
 
   useEffect(() => {
     if (rmore >= 0) {
       const timeout = setTimeout(() => {
         setdisplayed(true);
-      }, 300);
+      }, 50);
       return () => clearTimeout(timeout);
     }
   }, [rmore]);
@@ -47,8 +59,52 @@ const Projects = ({ TimeHasExpired }: { TimeHasExpired: boolean }) => {
     }
   }, [TimeHasExpired]);
 
+  useEffect(() => {
+    if (!loading && githubProjects && githubProjects.items) {
+      // Temporary arrays to hold the items for each grid
+      const firstGridItems: Array<React.JSX.Element> = [];
+      const secondGridItems: Array<React.JSX.Element> = [];
+      const thirdGridItems: Array<React.JSX.Element> = [];
+      var removeone = 0;
+      githubProjects.items.forEach((project: any, index: number) => {
+        if (project.name == "Mawhadmd") {
+          removeone--;
+          return;
+        }
+        index = index + removeone
+        const projectView = (
+          <ProjectView
+            setrmore={setrmore}
+            rmore={rmore === index ? displayed : false}
+            key={(index)} // Ensure this key is unique
+            project={project}
+            index={index}
+            setdisplayed={setdisplayed}
+          />
+        );
+
+        // Push the component into the appropriate grid array
+        if (index % 3 === 0) {
+          firstGridItems.push(projectView);
+        } else if (index % 3 === 1) {
+          secondGridItems.push(projectView);
+        } else {
+          thirdGridItems.push(projectView);
+        }
+      });
+
+      // Update state once after processing all items
+      setitems({
+        Firstgrid: firstGridItems,
+        Secondsgrid: secondGridItems,
+        Thirdgrid: thirdGridItems,
+      });
+    }
+
+    setloading(false);
+  }, [githubProjects,rmore,displayed]);
   return (
-    <div  className="Gitprojectcontainer" ref={githubref}>
+    <div className="Gitprojectcontainer" ref={githubref}>
       <div style={{ textAlign: "center", padding: "10px" }}>
         <h1>Projects</h1>
         Last update: {lastSeen}{" "}
@@ -58,28 +114,12 @@ const Projects = ({ TimeHasExpired }: { TimeHasExpired: boolean }) => {
             : "hours"
           : ""}{" "}
       </div>
-      <section className="ProjectGrid">
-        {githubProjects && githubProjects.items ? (
-          githubProjects.items.map(
-            (project: (typeof githubProjects)[0], index: number) => (
-          
-                project.name != "Mawhadmd" && (
-                  <ProjectView
-                    setrmore={setrmore}
-                    rmore={rmore == index ? displayed : false}
-                    key={index}
-                    project={project}
-                    index={index}
-                    setdisplayed= {setdisplayed}
-                  />
-                )
-          
-            )
-          )
-        ) : (
-          <p>Loading...</p>
-        )}
-      </section>
+      <div className="TheBiggerGrid">
+        {loading && <p>Loading...</p>}
+        <section className="ProjectGrid">{items?.Firstgrid}</section>
+        <section className="ProjectGrid">{items?.Secondsgrid}</section>
+        <section className="ProjectGrid">{items?.Thirdgrid}</section>
+      </div>
     </div>
   );
 };

@@ -58,9 +58,13 @@ const Data: SkillData[] = [
 const ComponentName = () => {
   const [animate, setanimate] = useState<boolean>(false);
   const { skillsref, techstackref }: any = useContext(refsprovider);
+  var randomx = Math.random() * 500 + 300;
+  var randomy = Math.random() * 500 + 300;
+  var randomx1 = Math.random() < 0.5 ? 1 : -1;
+  var randomy1 = Math.random() < 0.5 ? 1 : -1;
   return (
     <div className="projectgridcontainer">
-    <h2>Skills</h2>
+      <h2>Skills</h2>
       <motion.section
         ref={skillsref}
         id="skills"
@@ -79,30 +83,21 @@ const ComponentName = () => {
               transition={{
                 type: "spring",
                 duration: 1,
-                delay: 0.2 * index,
+                delay: 0.42 * index,
                 ease: easeInOut,
               }}
               animate={
                 animate
                   ? {
                       opacity: [0, 1],
-                      x: [
-                        (Math.random() * 700 + 300) *
-                          (Math.random() < 0.5 ? 1 : -1),
-                        0,
-                      ],
-                      y: [
-                        (Math.random() * 700 + 300) *
-                          (Math.random() < 0.5 ? 1 : -1),
-                        0,
-                      ],
+                      x: [randomx * randomx1, 0],
+                      y: [randomy * randomy1, 0],
                     }
                   : { opacity: 0 }
               }
               layout
               className="SkillBlock"
             >
-
               <img src={item.Icon} alt="Webdev" />
               <h1>{item.Skill}</h1>
               <p>{item.Description}</p>

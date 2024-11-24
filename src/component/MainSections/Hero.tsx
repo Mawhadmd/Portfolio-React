@@ -103,24 +103,24 @@ const Hero = () => {
         </motion.p>
         <motion.ul whileInView={{y:[200,0], opacity:[0,1]}} viewport={{once: true}} transition={{duration: 0.5, delay:1}}>
           <li>
-            <a href="#"></a>
+            <a href="https://www.linkedin.com/in/mhmdawad/">
             <img src={linkedin} alt="linkedin" />
-            <a />
+            </a>
           </li>
           <li>
-            <a href="#"></a>
+            <a href="https://github.com/Mawhadmd">
             <img src={github} alt="github" />
-            <a />
+            </a>
           </li>
           <li>
-            <a href="#"></a>
+            <a href="https://x.com/Mawhadmd">
             <img src={twitter} alt="twitter" />
-            <a />
+            </a>
           </li>
           <li>
-            <a href="#"></a>
+            <a href="https://www.upwork.com/freelancers/~018ac5044285e8e175">
             <img src={upwork} alt="upwork" />
-            <a />
+            </a>
           </li>
         </motion.ul>
       </motion.div>

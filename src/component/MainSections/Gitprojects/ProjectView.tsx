@@ -6,31 +6,27 @@ interface pojectviewtypes {
   rmore: boolean;
   index: number;
   setrmore: any;
-  setdisplayed: any
+  setdisplayed: any;
 }
-const ProjectView = ({ project, index, rmore, setrmore, setdisplayed }: pojectviewtypes) => {
-  const [load, setload] = useState<boolean>(false);
+const ProjectView = ({
+  project,
+  index,
+  rmore,
+  setrmore,
+  setdisplayed,
+}: pojectviewtypes) => {
+  const [load, setload] = useState<boolean>(true);
   const viewref = useRef<any>();
-  const scrollintoview = () => {
-    let time = setTimeout(() => {
-      viewref.current.scrollIntoView();
-    },500);
-    return () => clearTimeout(time);
-  };
-  useEffect(() => {
-    setload(false);
-    let delay = setTimeout(
-      () => {
-        setload(true);
-      },
-
-     0
-    );
-    return () => clearTimeout(delay);
-  }, [rmore]);
 
   return (
     <motion.div
+      onHoverEnd={() => {
+        setrmore(-4);
+      }}
+      onHoverStart={() => {
+        setrmore(index);
+        setdisplayed(false);
+      }}
       ref={viewref}
       layout
       style={{
@@ -43,39 +39,27 @@ const ProjectView = ({ project, index, rmore, setrmore, setdisplayed }: pojectvi
       viewport={{ once: true }}
     >
       <h3 className="projectname">{project.name}</h3>
-      {rmore ? (
-        load && (
+      {rmore && (
+        (
           <>
             <p className="pjktdesc">{project.description}</p>
-            <button
-              onClick={() => {
-                setrmore(-4);
-                scrollintoview();
 
-              }}
-              style={{ margin: "10px 0px" }}
-            >
-              Read Less
-            </button>
-            <a target="_blank" href={project.html_url}>
-              <button>
-                <img src={uparr} alt="Arrow" />
-                Github
-              </button>
-            </a>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <a target="_blank" href={project.homepage}>
+                <button>
+                  <img src={uparr} alt="Arrow" />
+                  Live Demo
+                </button>
+              </a>
+              <a target="_blank" href={project.html_url}>
+                <button>
+                  <img src={uparr} alt="Arrow" />
+                  Github
+                </button>
+              </a>
+            </div>
           </>
         )
-      ) : (
-        <button
-          onClick={() => {
-            setrmore(index);
-            setdisplayed(false)
-            scrollintoview();
-          }}
-          style={{ margin: "10px 0px" }}
-        >
-          Read More
-        </button>
       )}
     </motion.div>
   );
